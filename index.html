@@ -29,7 +29,7 @@
         .heart-bg {
             position: absolute;
             font-size: 20px;
-            color: rgba(255, 255, 255, 0.2);
+            color: inherit;
             animation: float 10s infinite linear;
         }
 
@@ -59,7 +59,7 @@
 
         .heart-text {
             position: absolute;
-            top: 48%;
+            top: 55%;
             left: 50%;
             transform: translate(-50%, -50%);
             font-size: 0.12em;
@@ -187,10 +187,11 @@
         document.addEventListener('DOMContentLoaded', function() {
             // Create floating hearts
             const backgroundHearts = document.getElementById('background-hearts');
-            for (let i = 0; i < 20; i++) {
+            const heartEmojis = ['❤️', '💖', '💕', '💗', '💓', '💞', '💘'];
+            for (let i = 0; i < 50; i++) {
                 const heart = document.createElement('div');
                 heart.className = 'heart-bg';
-                heart.textContent = '❤️';
+                heart.textContent = heartEmojis[Math.floor(Math.random() * heartEmojis.length)];
                 heart.style.left = Math.random() * 100 + '%';
                 heart.style.animationDelay = Math.random() * 10 + 's';
                 backgroundHearts.appendChild(heart);
