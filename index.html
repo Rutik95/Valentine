@@ -3,20 +3,227 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Happy Valentine's Day!</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Valentine</title>
+    <style>
+        /* CSS styles here */
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #fff;
+            color: #d63384;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .background-hearts {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .heart-bg {
+            position: absolute;
+            font-size: 20px;
+            color: rgba(255, 192, 203, 0.3);
+            animation: float 10s infinite linear;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(100vh) rotate(0deg); }
+            100% { transform: translateY(-100px) rotate(360deg); }
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            text-align: center;
+        }
+
+        .big-heart {
+            font-size: 150px;
+            color: #ff0000;
+            margin-bottom: 20px;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .question {
+            font-size: 2em;
+            font-family: 'Brush Script MT', cursive;
+            color: #d63384;
+            margin-bottom: 40px;
+        }
+
+        .buttons {
+            display: flex;
+            gap: 20px;
+        }
+
+        button {
+            padding: 15px 30px;
+            font-size: 1.2em;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        #yes-btn {
+            background: linear-gradient(45deg, #ff6b6b, #ffa500);
+            color: white;
+        }
+
+        #yes-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+        }
+
+        #no-btn {
+            background: linear-gradient(45deg, #ffb3ba, #ffdfba);
+            color: #d63384;
+            position: relative;
+        }
+
+        #no-btn:hover {
+            transform: scale(1.05);
+        }
+
+        .success {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255,255,255,0.9);
+            z-index: 10;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-size: 3em;
+            color: #d63384;
+        }
+
+        .confetti {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background: #ff6b6b;
+            animation: confetti-fall 3s infinite;
+        }
+
+        @keyframes confetti-fall {
+            0% { transform: translateY(-100vh) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+        }
+
+        @media (max-width: 768px) {
+            .big-heart {
+                font-size: 100px;
+            }
+            .question {
+                font-size: 1.5em;
+            }
+            .buttons {
+                flex-direction: column;
+                gap: 10px;
+            }
+        }
+    </style>
 </head>
 <body>
+    <div class="background-hearts" id="background-hearts"></div>
     <div class="container">
-        <h1>Happy Valentine's Day!</h1>
-        <p>Spread love and joy today.</p>
-        <div class="hearts">
-            <span class="heart">❤️</span>
-            <span class="heart">💖</span>
-            <span class="heart">💕</span>
+        <div class="big-heart">❤️</div>
+        <div class="question">Will you be my Valentine?</div>
+        <div class="buttons">
+            <button id="yes-btn">Yes</button>
+            <button id="no-btn">No</button>
         </div>
-        <button id="loveButton">Click for Love</button>
     </div>
-    <script src="script.js"></script>
+    <div class="success" id="success">
+        <div>Yay! You made my day! ❤️</div>
+    </div>
+    <script>
+        // JavaScript here
+        document.addEventListener('DOMContentLoaded', function() {
+            // Create floating hearts
+            const backgroundHearts = document.getElementById('background-hearts');
+            for (let i = 0; i < 20; i++) {
+                const heart = document.createElement('div');
+                heart.className = 'heart-bg';
+                heart.textContent = '❤️';
+                heart.style.left = Math.random() * 100 + '%';
+                heart.style.animationDelay = Math.random() * 10 + 's';
+                backgroundHearts.appendChild(heart);
+            }
+
+            const noBtn = document.getElementById('no-btn');
+            const yesBtn = document.getElementById('yes-btn');
+            const success = document.getElementById('success');
+
+            // Mouse proximity for No button
+            document.addEventListener('mousemove', function(e) {
+                const rect = noBtn.getBoundingClientRect();
+                const btnCenterX = rect.left + rect.width / 2;
+                const btnCenterY = rect.top + rect.height / 2;
+                const distance = Math.sqrt((e.clientX - btnCenterX) ** 2 + (e.clientY - btnCenterY) ** 2);
+
+                if (distance < 100) { // Proximity threshold
+                    const angle = Math.random() * 2 * Math.PI;
+                    const radius = 50 + Math.random() * 50;
+                    const newX = btnCenterX + Math.cos(angle) * radius;
+                    const newY = btnCenterY + Math.sin(angle) * radius;
+
+                    noBtn.style.position = 'absolute';
+                    noBtn.style.left = Math.max(0, Math.min(window.innerWidth - rect.width, newX - rect.width / 2)) + 'px';
+                    noBtn.style.top = Math.max(0, Math.min(window.innerHeight - rect.height, newY - rect.height / 2)) + 'px';
+                    noBtn.style.transition = 'all 0.5s ease';
+                }
+            });
+
+            // Touch for mobile
+            noBtn.addEventListener('touchstart', function() {
+                const angle = Math.random() * 2 * Math.PI;
+                const radius = 50 + Math.random() * 50;
+                const rect = noBtn.getBoundingClientRect();
+                const btnCenterX = rect.left + rect.width / 2;
+                const btnCenterY = rect.top + rect.height / 2;
+                const newX = btnCenterX + Math.cos(angle) * radius;
+                const newY = btnCenterY + Math.sin(angle) * radius;
+
+                noBtn.style.position = 'absolute';
+                noBtn.style.left = Math.max(0, Math.min(window.innerWidth - rect.width, newX - rect.width / 2)) + 'px';
+                noBtn.style.top = Math.max(0, Math.min(window.innerHeight - rect.height, newY - rect.height / 2)) + 'px';
+                noBtn.style.transition = 'all 0.5s ease';
+            });
+
+            // Yes button click
+            yesBtn.addEventListener('click', function() {
+                success.style.display = 'flex';
+                // Add confetti
+                for (let i = 0; i < 50; i++) {
+                    const confetti = document.createElement('div');
+                    confetti.className = 'confetti';
+                    confetti.style.left = Math.random() * 100 + '%';
+                    confetti.style.animationDelay = Math.random() * 3 + 's';
+                    success.appendChild(confetti);
+                }
+            });
+        });
+    </script>
 </body>
 </html>
