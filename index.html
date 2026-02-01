@@ -218,7 +218,7 @@
 
                 if (distance < 100) { // Proximity threshold
                     const angle = Math.random() * 2 * Math.PI;
-                    const radius = 50 + Math.random() * 50;
+                    const radius = 100 + Math.random() * 100;
                     const newX = btnCenterX + Math.cos(angle) * radius;
                     const newY = btnCenterY + Math.sin(angle) * radius;
 
@@ -232,7 +232,7 @@
             // Touch for mobile
             noBtn.addEventListener('touchstart', function() {
                 const angle = Math.random() * 2 * Math.PI;
-                const radius = 50 + Math.random() * 50;
+                const radius = 100 + Math.random() * 100;
                 const rect = noBtn.getBoundingClientRect();
                 const btnCenterX = rect.left + rect.width / 2;
                 const btnCenterY = rect.top + rect.height / 2;
