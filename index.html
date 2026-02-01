@@ -52,6 +52,21 @@
             color: #ff0000;
             margin-bottom: 20px;
             animation: pulse 2s infinite;
+            position: relative;
+            display: inline-block;
+        }
+
+        .heart-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 0.3em;
+            font-family: 'Brush Script MT', cursive;
+            color: #fff;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.8);
+            text-align: center;
+            white-space: nowrap;
         }
 
         @keyframes pulse {
@@ -148,8 +163,10 @@
 <body>
     <div class="background-hearts" id="background-hearts"></div>
     <div class="container">
-        <div class="big-heart">❤️</div>
-        <div class="question">Monica, will you be my Valentine?</div>
+        <div class="big-heart">
+            ❤️
+            <div class="heart-text">Monica, will you be my Valentine?</div>
+        </div>
         <div class="buttons">
             <button id="yes-btn">Yes</button>
             <button id="no-btn">No</button>
