@@ -209,6 +209,11 @@
             const yesBtn = document.getElementById('yes-btn');
             const success = document.getElementById('success');
 
+            // Set No button to absolute position initially to avoid teleport on first repel
+            noBtn.style.position = 'absolute';
+            noBtn.style.left = noBtn.offsetLeft + 'px';
+            noBtn.style.top = noBtn.offsetTop + 'px';
+
             // Mouse proximity for No button
             document.addEventListener('mousemove', function(e) {
                 const rect = noBtn.getBoundingClientRect();
@@ -222,7 +227,6 @@
                     const newX = btnCenterX + Math.cos(angle) * radius;
                     const newY = btnCenterY + Math.sin(angle) * radius;
 
-                    noBtn.style.position = 'absolute';
                     noBtn.style.left = Math.max(0, Math.min(window.innerWidth - rect.width, newX - rect.width / 2)) + 'px';
                     noBtn.style.top = Math.max(0, Math.min(window.innerHeight - rect.height, newY - rect.height / 2)) + 'px';
                     noBtn.style.transition = 'all 0.5s ease';
@@ -239,7 +243,6 @@
                 const newX = btnCenterX + Math.cos(angle) * radius;
                 const newY = btnCenterY + Math.sin(angle) * radius;
 
-                noBtn.style.position = 'absolute';
                 noBtn.style.left = Math.max(0, Math.min(window.innerWidth - rect.width, newX - rect.width / 2)) + 'px';
                 noBtn.style.top = Math.max(0, Math.min(window.innerHeight - rect.height, newY - rect.height / 2)) + 'px';
                 noBtn.style.transition = 'all 0.5s ease';
