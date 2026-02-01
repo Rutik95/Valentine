@@ -48,7 +48,7 @@
         }
 
         .big-heart {
-            font-size: 200px;
+            font-size: 300px;
             color: #ff0000;
             margin-bottom: 20px;
             animation: pulse 2s infinite;
@@ -61,12 +61,13 @@
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            font-size: 0.3em;
+            font-size: 0.2em;
             font-family: 'Brush Script MT', cursive;
             color: #fff;
             text-shadow: 2px 2px 4px rgba(0,0,0,0.8);
             text-align: center;
-            white-space: nowrap;
+            white-space: normal;
+            line-height: 1.2;
         }
 
         @keyframes pulse {
@@ -165,7 +166,7 @@
     <div class="container">
         <div class="big-heart">
             ❤️
-            <div class="heart-text">Monica, will you be my Valentine?</div>
+            <div class="heart-text">Monica,<br>will you be my<br>Valentine?</div>
         </div>
         <div class="buttons">
             <button id="yes-btn">Yes</button>
