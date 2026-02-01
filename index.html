@@ -229,6 +229,8 @@
             noBtn.style.left = noBtn.offsetLeft + 'px';
             noBtn.style.top = noBtn.offsetTop + 'px';
 
+            let lastMove = 0;
+
             // Mouse proximity for No button
             document.addEventListener('mousemove', function(e) {
                 const rect = noBtn.getBoundingClientRect();
@@ -236,7 +238,7 @@
                 const btnCenterY = rect.top + rect.height / 2;
                 const distance = Math.sqrt((e.clientX - btnCenterX) ** 2 + (e.clientY - btnCenterY) ** 2);
 
-                if (distance < 100) { // Proximity threshold
+                if (distance < 100 && Date.now() - lastMove > 1000) { // Proximity threshold
                     const angle = Math.random() * 2 * Math.PI;
                     const radius = 100 + Math.random() * 100;
                     const newX = btnCenterX + Math.cos(angle) * radius;
@@ -245,22 +247,26 @@
                     noBtn.style.left = Math.max(0, Math.min(window.innerWidth - rect.width, newX - rect.width / 2)) + 'px';
                     noBtn.style.top = Math.max(0, Math.min(window.innerHeight - rect.height, newY - rect.height / 2)) + 'px';
                     noBtn.style.transition = 'all 0.5s ease';
+                    lastMove = Date.now();
                 }
             });
 
             // Touch for mobile
             noBtn.addEventListener('touchstart', function() {
-                const angle = Math.random() * 2 * Math.PI;
-                const radius = 100 + Math.random() * 100;
-                const rect = noBtn.getBoundingClientRect();
-                const btnCenterX = rect.left + rect.width / 2;
-                const btnCenterY = rect.top + rect.height / 2;
-                const newX = btnCenterX + Math.cos(angle) * radius;
-                const newY = btnCenterY + Math.sin(angle) * radius;
+                if (Date.now() - lastMove > 1000) {
+                    const angle = Math.random() * 2 * Math.PI;
+                    const radius = 100 + Math.random() * 100;
+                    const rect = noBtn.getBoundingClientRect();
+                    const btnCenterX = rect.left + rect.width / 2;
+                    const btnCenterY = rect.top + rect.height / 2;
+                    const newX = btnCenterX + Math.cos(angle) * radius;
+                    const newY = btnCenterY + Math.sin(angle) * radius;
 
-                noBtn.style.left = Math.max(0, Math.min(window.innerWidth - rect.width, newX - rect.width / 2)) + 'px';
-                noBtn.style.top = Math.max(0, Math.min(window.innerHeight - rect.height, newY - rect.height / 2)) + 'px';
-                noBtn.style.transition = 'all 0.5s ease';
+                    noBtn.style.left = Math.max(0, Math.min(window.innerWidth - rect.width, newX - rect.width / 2)) + 'px';
+                    noBtn.style.top = Math.max(0, Math.min(window.innerHeight - rect.height, newY - rect.height / 2)) + 'px';
+                    noBtn.style.transition = 'all 0.5s ease';
+                    lastMove = Date.now();
+                }
             });
 
             // Yes button click
